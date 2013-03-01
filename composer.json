@@ -1,0 +1,19 @@
+{
+    "name": "sog/realex",
+    "type": "library",
+    "description": "Realex payment service library",
+    "keywords": ["realex", "payment", "e-commerce"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shane O'Grady",
+            "email": "shane.ogrady@gmail.com"
+        }
+    ],
+    "suggest": {
+        "ext-curl": "Enabling the cURL extension allows you to use cURL"
+    },
+    "autoload": {
+        "psr-0": { "Realex": "src/" }
+    }
+}
