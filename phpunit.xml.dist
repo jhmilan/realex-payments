@@ -11,7 +11,10 @@
     bootstrap="tests/bootstrap.php"
     >
     <php>
-        <!-- parameters go here -->
+        <!-- <server name="MERCHANT_ID" value=""/> -->
+        <!-- <server name="SECRET" value=""/> -->
+        <!-- <server name="ACCOUNT" value=""/> -->
+        <!-- <server name="AUTH_DATA" value=""/>  -->
     </php>
     <testsuites>
         <testsuite name="Realex Test Suite">
