@@ -10,8 +10,12 @@
             "email": "shane.ogrady@gmail.com"
         }
     ],
+    "require-dev": {
+        "kriswallsmith/buzz": "@stable"
+    },
     "suggest": {
-        "ext-curl": "Enabling the cURL extension allows you to use cURL"
+        "ext-curl": "Enabling the cURL extension allows you to use cURL",
+        "kriswallsmith/buzz": "The Buzz library allows you to use the BuzzHttpAdapter"
     },
     "autoload": {
         "psr-0": { "Realex": "src/" }

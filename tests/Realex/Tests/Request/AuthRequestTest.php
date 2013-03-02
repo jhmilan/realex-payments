@@ -16,6 +16,7 @@ use Realex\Tests\CsvFileIterator;
 
 use Realex\Request\AuthRequest;
 use Realex\HttpAdapter\CurlHttpAdapter;
+use Realex\HttpAdapter\BuzzHttpAdapter;
 
 /**
  * @author Shane O'Grady <shane.ogrady@gmail.com>
@@ -100,29 +101,36 @@ class AuthRequestTest extends TestCase
      */
     public function testAuth($number, $code, $message, $currency, $type)
     {
-        $request = new AuthRequest(new CurlHttpAdapter());
+        $adapters = array(
+            new CurlHttpAdapter(),
+            new BuzzHttpAdapter(),
+        );
 
-        $result = $request
-            ->setMerchantId($_SERVER['MERCHANT_ID'])
-            ->setAccount($_SERVER['ACCOUNT'])
-            ->setSecret($_SERVER['SECRET'])
-            ->setOrderId($request->getTimeStamp() . "-" . mt_rand(1, 999))
-            ->setAmount(rand(1, 1000 * pow(10, 2))/ pow(10, 2))
-            ->setCurrency($currency)
-            ->setCardNumber($number)
-            ->setExpiryDate(strftime("%m%y"))
-            ->setCvn(str_pad(rand(0, pow(10, 3)-1), 3, '0', STR_PAD_LEFT))
-            ->setCardType($type)
-            ->setAutoSettle(true)
-            ->setCardHolder(substr(md5(rand()), 0, 20))
-            ->execute();
+        foreach ($adapters as $adapter) {
+            $request = new AuthRequest($adapter);
+
+            $result = $request
+                ->setMerchantId($_SERVER['MERCHANT_ID'])
+                ->setAccount($_SERVER['ACCOUNT'])
+                ->setSecret($_SERVER['SECRET'])
+                ->setOrderId($request->getTimeStamp() . "-" . mt_rand(1, 999))
+                ->setAmount(rand(1, 1000 * pow(10, 2))/ pow(10, 2))
+                ->setCurrency($currency)
+                ->setCardNumber($number)
+                ->setExpiryDate(strftime("%m%y"))
+                ->setCvn(str_pad(rand(0, pow(10, 3)-1), 3, '0', STR_PAD_LEFT))
+                ->setCardType($type)
+                ->setAutoSettle(true)
+                ->setCardHolder(substr(md5(rand()), 0, 20))
+                ->execute();
 
 
-        $this->assertNotNull($request->getHash());
+            $this->assertNotNull($request->getHash());
 
-        $result = simplexml_load_string($result);
+            $result = simplexml_load_string($result);
 
-        $this->assertEquals($code, $result->result);
+            $this->assertEquals($code, $result->result);
+        }
     }
 
     public function provider()
