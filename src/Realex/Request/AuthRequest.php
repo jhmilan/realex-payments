@@ -59,7 +59,7 @@ class AuthRequest extends AbstractRequest implements RequestInterface
     /**
      * @var bool
      */
-    protected $auto_settle = true;
+    protected $auto_settle = TRUE;
 
     /**
      * {@inheritDoc}
@@ -96,30 +96,6 @@ XML;
     public function getName()
     {
         return "auth";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function setMd5Hash()
-    {
-        $fields = md5($this->getHashFields());
-
-        $this->md5hash = md5("$fields.{$this->getSecret()}");
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function setSha1Hash()
-    {
-        $fields = sha1($this->getHashFields());
-
-        $this->sha1hash = sha1("$fields.{$this->getSecret()}");
-
-        return $this;
     }
 
     /**
@@ -264,7 +240,7 @@ XML;
      */
     public function getCvn()
     {
-        return $this->order_id;
+        return $this->cvn;
     }
 
     /**
@@ -336,7 +312,7 @@ XML;
      */
     public function getAutoSettle()
     {
-        return $this->auto_settle;
+        return intval($this->auto_settle);
     }
 
     /**
@@ -363,7 +339,7 @@ XML;
             array(
                 $this->getTimestamp(),
                 $this->getMerchantId(),
-                $this->getOrderID(),
+                $this->getOrderId(),
                 $this->getAmount(true),
                 $this->getCurrency(),
                 $this->getCardNumber()

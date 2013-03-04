@@ -206,7 +206,14 @@ abstract class AbstractRequest
      *
      * @return AbstractRequest
      */
-    abstract protected function setMd5Hash();
+    protected function setMd5Hash()
+    {
+        $fields = md5($this->getHashFields());
+
+        $this->md5hash = md5("$fields.{$this->getSecret()}");
+
+        return $this;
+    }
 
     /**
      * Returns the SHA1 hash
@@ -223,7 +230,14 @@ abstract class AbstractRequest
      *
      * @return AbstractRequest
      */
-    abstract protected function setSha1Hash();
+    protected function setSha1Hash()
+    {
+        $fields = sha1($this->getHashFields());
+
+        $this->sha1hash = sha1("$fields.{$this->getSecret()}");
+
+        return $this;
+    }
 
     /**
      * Returns the hash
@@ -240,7 +254,7 @@ abstract class AbstractRequest
     }
 
     /**
-     * Sets the SHA1 hash to be used.
+     * Sets the hash to be used.
      *
      * @return AbstractRequest
      */
