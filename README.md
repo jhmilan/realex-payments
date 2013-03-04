@@ -16,7 +16,7 @@ Just create a `composer.json` file for your project:
 ``` json
 {
     "require": {
-        "sog/realex": "*"
+        "shaneog/realex": "*"
     }
 }
 ```
@@ -36,11 +36,12 @@ php composer.phar install
 
 - Use the Symfony CardSchemeValidator to validate that the card is valid for the credit cards accepted
 - Remove the need to manually specify the card type.
-- Add valiators for the AUTH fields
-- Add further HttpAdapters (e.g. Buzz)
+- Add validators for the AUTH fields
+- ~~Add further HttpAdapters (e.g. Buzz)~~
 - Add support for AUTH comments
 - Add support for TSSinfo fields
-- Add VOID request
-- Add REBATE request
-- Add REFUND request
-- Add proper Response parsing, for each request type
+- ~~Add VOID request~~
+- Add VOID response
+- ~~Add REBATE request~~
+- Add REBATE response
+- Add proper response parsing, for each request type
