@@ -4,7 +4,7 @@ Realex
 **Realex** is a library to use [Realex Payments][1] payment service via their API.
 Developer documentation for the Realex API can be found [here][2].
 
-[![Build Status](https://secure.travis-ci.org/shaneog/Realex.png)](http://travis-ci.org/shaneog/Realex)
+[![Build Status](https://travis-ci.org/shaneog/realex-payments.png)](http://travis-ci.org/shaneog/realex-payments)
 
 
 ### Installation
