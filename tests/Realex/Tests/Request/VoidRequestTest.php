@@ -35,9 +35,10 @@ class VoidRequestTest extends TestCase
 
         // Call the setHash protected method
         $method = new \ReflectionMethod(
-          'Realex\Request\VoidRequest', 'validate'
+            'Realex\Request\VoidRequest',
+            'validate'
         );
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
         $method->invoke($request);
 
         $this->assertTrue($method->invoke($request));
@@ -51,9 +52,10 @@ class VoidRequestTest extends TestCase
 
         // Call the setHash protected method
         $method = new \ReflectionMethod(
-          'Realex\Request\VoidRequest', 'getHashFields'
+            'Realex\Request\VoidRequest',
+            'getHashFields'
         );
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
         $method->invoke($request);
 
         $this->assertNotNull($method->invoke($request));
@@ -78,9 +80,10 @@ class VoidRequestTest extends TestCase
 
         // Call the setHash protected method
         $method = new \ReflectionMethod(
-          'Realex\Request\VoidRequest', 'getXml'
+            'Realex\Request\VoidRequest',
+            'getXml'
         );
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
         $method->invoke($request);
 
         $this->assertNotNull($method->invoke($request));
@@ -94,9 +97,10 @@ class VoidRequestTest extends TestCase
 
         // Override the timestamp property so we can validate hashing is correct
         $property = new \ReflectionProperty(
-          'Realex\Request\VoidRequest', 'timestamp'
+            'Realex\Request\VoidRequest',
+            'timestamp'
         );
-        $property->setAccessible(TRUE);
+        $property->setAccessible(true);
         $property->setValue($request, "20130304161404");
 
         $xml = <<<XML
@@ -145,5 +149,4 @@ XML;
         $this->assertEquals("13624136446768", $request->getPasRef());
 
     }
-
 }

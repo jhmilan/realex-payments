@@ -302,5 +302,4 @@ abstract class AbstractResponse
      * @return string
      */
     abstract protected function getHashFields();
-
 }

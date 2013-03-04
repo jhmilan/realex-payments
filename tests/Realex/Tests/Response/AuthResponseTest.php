@@ -91,10 +91,11 @@ XML;
     public function testValidate()
     {
         $method = new \ReflectionMethod(
-          'Realex\Response\AuthResponse', 'validate'
+            'Realex\Response\AuthResponse',
+            'validate'
         );
 
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
 
         $this->assertTrue($method->invoke($this->response));
     }
@@ -105,12 +106,12 @@ XML;
     public function testParseResult()
     {
         $method = new \ReflectionMethod(
-          'Realex\Response\AuthResponse', 'parseResult'
+            'Realex\Response\AuthResponse',
+            'parseResult'
         );
 
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
 
         $method->invoke($this->response, null);
     }
-
 }

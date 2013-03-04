@@ -59,7 +59,7 @@ class AuthRequest extends AbstractRequest implements RequestInterface
     /**
      * @var bool
      */
-    protected $auto_settle = TRUE;
+    protected $auto_settle = true;
 
     /**
      * {@inheritDoc}

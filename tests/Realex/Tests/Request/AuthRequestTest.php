@@ -180,15 +180,15 @@ class AuthRequestTest extends TestCase
         $adapter = $this->getMockAdapter($this->never());
         $request = new AuthRequest($adapter);
 
-        // Default TRUE
+        // Default true
         $this->assertTrue((bool) $request->getAutoSettle());
 
-        $request->setAutoSettle(FALSE);
+        $request->setAutoSettle(false);
         $this->assertFalse((bool) $request->getAutoSettle());
 
         $this->assertEquals(0, $request->getAutoSettle());
 
-        $request->setAutoSettle(TRUE);
+        $request->setAutoSettle(true);
         $this->assertTrue((bool) $request->getAutoSettle());
         $this->assertEquals(1, $request->getAutoSettle());
 
@@ -209,22 +209,25 @@ class AuthRequestTest extends TestCase
 
         // Override the timestamp property so we can validate hashing is correct
         $property = new \ReflectionProperty(
-          'Realex\Request\AuthRequest', 'timestamp'
+            'Realex\Request\AuthRequest',
+            'timestamp'
         );
-        $property->setAccessible(TRUE);
+        $property->setAccessible(true);
         $property->setValue($request, "20130304161404");
 
         // Call the setMd5Hash protected method
         $set_method = new \ReflectionMethod(
-          'Realex\Request\AuthRequest', 'setMd5Hash'
+            'Realex\Request\AuthRequest',
+            'setMd5Hash'
         );
-        $set_method->setAccessible(TRUE);
+        $set_method->setAccessible(true);
         $set_method->invoke($request);
 
         $get_method = new \ReflectionMethod(
-          'Realex\Request\AuthRequest', 'getMd5Hash'
+            'Realex\Request\AuthRequest',
+            'getMd5Hash'
         );
-        $get_method->setAccessible(TRUE);
+        $get_method->setAccessible(true);
 
         $this->assertEquals("be53bba574e919e93f2488a89c143239", $get_method->invoke($request));
 
@@ -245,22 +248,25 @@ class AuthRequestTest extends TestCase
 
         // Override the timestamp property so we can validate hashing is correct
         $property = new \ReflectionProperty(
-          'Realex\Request\AuthRequest', 'timestamp'
+            'Realex\Request\AuthRequest',
+            'timestamp'
         );
-        $property->setAccessible(TRUE);
+        $property->setAccessible(true);
         $property->setValue($request, "20130304161404");
 
         // Call the setHash protected method
         $set_method = new \ReflectionMethod(
-          'Realex\Request\AuthRequest', 'setSha1Hash'
+            'Realex\Request\AuthRequest',
+            'setSha1Hash'
         );
-        $set_method->setAccessible(TRUE);
+        $set_method->setAccessible(true);
         $set_method->invoke($request);
 
         $get_method = new \ReflectionMethod(
-          'Realex\Request\AuthRequest', 'getSha1Hash'
+            'Realex\Request\AuthRequest',
+            'getSha1Hash'
         );
-        $get_method->setAccessible(TRUE);
+        $get_method->setAccessible(true);
 
 
         $this->assertEquals("7b4f87f2b6cd1e96ba455ca86703e664b4ebdf45", $get_method->invoke($request));
@@ -282,16 +288,18 @@ class AuthRequestTest extends TestCase
 
         // Override the timestamp property so we can validate hashing is correct
         $property = new \ReflectionProperty(
-          'Realex\Request\AuthRequest', 'timestamp'
+            'Realex\Request\AuthRequest',
+            'timestamp'
         );
-        $property->setAccessible(TRUE);
+        $property->setAccessible(true);
         $property->setValue($request, "20130304161404");
 
         // Call the setHash protected method
         $method = new \ReflectionMethod(
-          'Realex\Request\AuthRequest', 'setHash'
+            'Realex\Request\AuthRequest',
+            'setHash'
         );
-        $method->setAccessible(TRUE);
+        $method->setAccessible(true);
 
         // MD5
         $request->setHashAlgorithm("MD5");

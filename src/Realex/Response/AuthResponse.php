@@ -142,5 +142,4 @@ class AuthResponse extends AbstractResponse implements ResponseInterface
             ->setAuthCode((string) $this->response->authcode)
             ->setPasRef((string) $this->response->pasref);
     }
-
 }
