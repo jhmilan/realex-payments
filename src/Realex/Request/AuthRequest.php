@@ -103,19 +103,7 @@ XML;
      */
     protected function setMd5Hash()
     {
-        $fields = md5(
-            implode(
-                ".",
-                array(
-                    $this->getTimestamp(),
-                    $this->getMerchantId(),
-                    $this->getOrderID(),
-                    $this->getAmount(true),
-                    $this->getCurrency(),
-                    $this->getCardNumber()
-                )
-            )
-        );
+        $fields = md5($this->getHashFields());
 
         $this->md5hash = md5("$fields.{$this->getSecret()}");
 
@@ -127,19 +115,7 @@ XML;
      */
     protected function setSha1Hash()
     {
-        $fields = sha1(
-            implode(
-                ".",
-                array(
-                    $this->getTimestamp(),
-                    $this->getMerchantId(),
-                    $this->getOrderID(),
-                    $this->getAmount(true),
-                    $this->getCurrency(),
-                    $this->getCardNumber()
-                )
-            )
-        );
+        $fields = sha1($this->getHashFields());
 
         $this->sha1hash = sha1("$fields.{$this->getSecret()}");
 
@@ -375,5 +351,23 @@ XML;
         $this->auto_settle = $auto_settle;
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getHashFields()
+    {
+        return implode(
+            ".",
+            array(
+                $this->getTimestamp(),
+                $this->getMerchantId(),
+                $this->getOrderID(),
+                $this->getAmount(true),
+                $this->getCurrency(),
+                $this->getCardNumber()
+            )
+        );
     }
 }

@@ -33,6 +33,11 @@ class MockRequest extends AbstractRequest
         return $this;
     }
 
+    protected function getHashFields()
+    {
+        return;
+    }
+
     protected function validate()
     {
         return true;

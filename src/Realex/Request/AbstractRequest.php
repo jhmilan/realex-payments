@@ -261,6 +261,13 @@ abstract class AbstractRequest
     abstract protected function validate();
 
     /**
+     * Return the specific fields for the hash function
+     *
+     * @return string
+     */
+    abstract protected function getHashFields();
+
+    /**
      * Executes the request
      *
      * @return string
