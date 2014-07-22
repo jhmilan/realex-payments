@@ -8,6 +8,10 @@
         {
             "name": "Shane O'Grady",
             "email": "shane.ogrady@gmail.com"
+        },
+        {
+            "name": "Jose H. Milán",
+            "email": "jose@square1.io"
         }
     ],
     "require": {

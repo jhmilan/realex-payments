@@ -16,36 +16,47 @@ namespace Realex;
  */
 class Realex
 {
-    private static $instance;
+    private static $instance = null;
 
-    private $endpoint;
+    private static $endpoint;
 
-    private $userAgent;
+    private static $userAgent;
+
+    private static $settled = false;
 
     public static function getInstance()
     {
-        if (!self::$instance) {
+        if (!self::isInstantiated()) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    public function getRemoteEndpoint()
+    public static function getRemoteEndpoint()
     {
-        return $this->remoteEndpoint;
+        if (!self::isSettled()) {
+            throw new \ErrorException('Realex engine not settled');
+        }
+        return self::$remoteEndpoint;
     }
 
-    public function getuserAgent()
+    public static function getuserAgent()
     {
-        return $this->userAgent;
+        if (!self::isSettled()) {
+            throw new \ErrorException('Realex engine not settled');
+        }
+        return self::$userAgent;
     }
 
     public function setProperty($property, $value)
     {
-        $this->$property = $value;
+        if (!self::isInstantiated()) {
+            throw new \ErrorException('Realex engine not settled');
+        }
+        self::$property = $value;
     }
 
-    public function load($params = array())
+    public static function load($params = array())
     {
         if (!is_array($params)) {
             throw new \ErrorException('Bad params when loading Realex');
@@ -65,5 +76,16 @@ class Realex
         foreach ($params as $param => $value) {
             self::getInstance()->setProperty($param, $value);            
         }
+        self::$settled = true;
+    }
+
+    public static function isInstantiated()
+    {
+        return (!is_null(self::$instance));
+    }
+
+    public static function isSettled()
+    {
+        return (self::isInstantiated() && self::$settled);
     }
 }
