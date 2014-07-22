@@ -16,7 +16,54 @@ namespace Realex;
  */
 class Realex
 {
-    const REMOTE_ENDPOINT = "https://epage.payandshop.com/epage-remote.cgi";
+    private static $instance;
 
-    const USER_AGENT = "Realex PHP Library";
+    private $endpoint;
+
+    private $userAgent;
+
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public function getRemoteEndpoint()
+    {
+        return $this->remoteEndpoint;
+    }
+
+    public function getuserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    public function setProperty($property, $value)
+    {
+        $this->$property = $value;
+    }
+
+    public function load($params = array())
+    {
+        if (!is_array($params)) {
+            throw new \ErrorException('Bad params when loading Realex');
+        }
+
+        $params = array_filter($params);
+        $params = array_intersect_key($params, array('remoteEndpoint', 'userAgent'));
+
+        if (!array_key_exists('remoteEndpoint', $params)) {
+            $params['remoteEndpoint'] = "https://epage.payandshop.com/epage-remote.cgi";
+        }
+
+        if (!array_key_exists('userAgent', $params)) {
+            $params['userAgent'] = "Realex PHP Library";
+        }
+
+        foreach ($params as $param => $value) {
+            self::getInstance()->setProperty($param, $value);            
+        }
+    }
 }
