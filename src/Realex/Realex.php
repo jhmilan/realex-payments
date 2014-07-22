@@ -32,12 +32,12 @@ class Realex
         return self::$instance;
     }
 
-    public static function getRemoteEndpoint()
+    public static function getEndpoint()
     {
         if (!self::isSettled()) {
             throw new \ErrorException('Realex engine not settled');
         }
-        return self::$remoteEndpoint;
+        return self::$endpoint;
     }
 
     public static function getuserAgent()
@@ -48,35 +48,37 @@ class Realex
         return self::$userAgent;
     }
 
-    public function setProperty($property, $value)
+    public static function setProperty($property, $value)
     {
         if (!self::isInstantiated()) {
-            throw new \ErrorException('Realex engine not settled');
+            throw new \ErrorException('Realex engine not instantiated');
         }
-        self::$property = $value;
+        self::${$property} = $value;
     }
 
     public static function load($params = array())
     {
+        self::getInstance();
+
         if (!is_array($params)) {
             throw new \ErrorException('Bad params when loading Realex');
         }
-
         $params = array_filter($params);
-        $params = array_intersect_key($params, array('remoteEndpoint', 'userAgent'));
+        $params = array_intersect_key($params, array_flip(array('endpoint', 'userAgent')));
 
-        if (!array_key_exists('remoteEndpoint', $params)) {
-            $params['remoteEndpoint'] = "https://epage.payandshop.com/epage-remote.cgi";
+        if (!array_key_exists('endpoint', $params)) {
+            $params['endpoint'] = "https://epage.payandshop.com/epage-remote.cgi";
         }
 
         if (!array_key_exists('userAgent', $params)) {
             $params['userAgent'] = "Realex PHP Library";
         }
 
-        foreach ($params as $param => $value) {
-            self::getInstance()->setProperty($param, $value);            
-        }
         self::$settled = true;
+
+        foreach ($params as $param => $value) {
+            self::setProperty($param, $value);
+        }
     }
 
     public static function isInstantiated()
