@@ -22,6 +22,12 @@ class Realex
 
     private static $userAgent;
 
+    private static $hashAlgorithm;
+    
+    private static $merchantId;
+    
+    private static $secret;
+
     private static $settled = false;
 
     public static function getInstance()
@@ -40,7 +46,7 @@ class Realex
         return self::$endpoint;
     }
 
-    public static function getuserAgent()
+    public static function getUserAgent()
     {
         if (!self::isSettled()) {
             throw new \ErrorException('Realex engine not settled');
@@ -48,6 +54,29 @@ class Realex
         return self::$userAgent;
     }
 
+    public static function getHashAlgorithm()
+    {
+        if (!self::isSettled()) {
+            throw new \ErrorException('Realex engine not settled');
+        }
+        return self::$hashAlgorithm;
+    }
+
+    public static function getMerchantId()
+    {
+        if (!self::isSettled()) {
+            throw new \ErrorException('Realex engine not settled');
+        }
+        return self::$merchantId;
+    }
+
+    public static function getSecret()
+    {
+        if (!self::isSettled()) {
+            throw new \ErrorException('Realex engine not settled');
+        }
+        return self::$secret;
+    }
     public static function setProperty($property, $value)
     {
         if (!self::isInstantiated()) {
@@ -64,8 +93,23 @@ class Realex
             throw new \ErrorException('Bad params when loading Realex');
         }
         $params = array_filter($params);
-        $params = array_intersect_key($params, array_flip(array('endpoint', 'userAgent')));
+        $params = array_intersect_key(
+            $params,
+            array_flip(
+                array('endpoint', 'userAgent','hashAlgorithm','merchantId','secret')
+            )
+        );
 
+        //mandatory fields
+        if (!array_key_exists('merchantId', $params)) {
+            throw new \ErrorException('Bad params when loading Realex: merchantId is mandatory');
+        }
+
+        if (!array_key_exists('secret', $params)) {
+            throw new \ErrorException('Bad params when loading Realex: secret is mandatory');
+        }
+
+        //set to default fields
         if (!array_key_exists('endpoint', $params)) {
             $params['endpoint'] = "https://epage.payandshop.com/epage-remote.cgi";
         }
@@ -73,6 +117,11 @@ class Realex
         if (!array_key_exists('userAgent', $params)) {
             $params['userAgent'] = "Realex PHP Library";
         }
+
+        if (!array_key_exists('hashAlgorithm', $params)) {
+            $params['hashAlgorithm'] = "sha1";
+        }
+
 
         self::$settled = true;
 

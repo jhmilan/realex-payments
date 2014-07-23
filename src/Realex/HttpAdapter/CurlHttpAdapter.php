@@ -28,9 +28,9 @@ class CurlHttpAdapter implements HttpAdapterInterface
         }
 
         $c = curl_init();
-        curl_setopt($c, CURLOPT_URL, Realex::REMOTE_ENDPOINT);
+        curl_setopt($c, CURLOPT_URL, Realex::getEndpoint());
         curl_setopt($c, CURLOPT_POST, 1);
-        curl_setopt($c, CURLOPT_USERAGENT, Realex::USER_AGENT);
+        curl_setopt($c, CURLOPT_USERAGENT, Realex::getUserAgent());
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_POSTFIELDS, $content);
 

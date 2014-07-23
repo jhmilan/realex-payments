@@ -39,7 +39,7 @@ class BuzzHttpAdapter implements HttpAdapterInterface
      */
     public function postRequest($content)
     {
-        $result = $this->browser->post(Realex::REMOTE_ENDPOINT, array("User-Agent" => Realex::USER_AGENT), $content);
+        $result = $this->browser->post(Realex::getEndpoint(), array("User-Agent" => Realex::getUserAgent()), $content);
         $response  = $result->getContent();
 
         return $response;
