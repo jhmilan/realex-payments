@@ -1,4 +1,8 @@
-Realex
+Square1 Realex
+======
+
+This is a fork from [https://github.com/shaneog/realex-payments](https://github.com/shaneog/realex-payments)
+
 ======
 
 **Realex** is a library to use [Realex Payments][1] payment service via their API.
