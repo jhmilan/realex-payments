@@ -28,6 +28,8 @@ class Realex
     
     private static $secret;
 
+    private static $adapter;
+
     private static $settled = false;
 
     public static function getInstance()
@@ -77,6 +79,15 @@ class Realex
         }
         return self::$secret;
     }
+    
+    public static function getAdapter()
+    {
+        if (!self::isSettled()) {
+            throw new \ErrorException('Realex engine not settled');
+        }
+        return self::$secret;
+    }
+
     public static function setProperty($property, $value)
     {
         if (!self::isInstantiated()) {
@@ -96,7 +107,7 @@ class Realex
         $params = array_intersect_key(
             $params,
             array_flip(
-                array('endpoint', 'userAgent','hashAlgorithm','merchantId','secret')
+                array('endpoint', 'userAgent','hashAlgorithm','merchantId','secret', 'adapter')
             )
         );
 
@@ -120,8 +131,19 @@ class Realex
 
         if (!array_key_exists('hashAlgorithm', $params)) {
             $params['hashAlgorithm'] = "sha1";
+        } else {
+            if (!in_array($params['hashAlgorithm'], array('md5', 'sha1'))) {
+                throw new \ErrorException('Bad params when loading Realex: hashAlgorithm must be md5 or sha1');
+            }
         }
 
+        if (!array_key_exists('adapter', $params)) {
+            $params['adapter'] = "curl";
+        } else {
+            if (!in_array($params['adapter'], array('md5', 'sha1'))) {
+                throw new \ErrorException('Bad params when loading Realex: adapter must be curl or buzz');
+            }
+        }
 
         self::$settled = true;
 
@@ -138,5 +160,23 @@ class Realex
     public static function isSettled()
     {
         return (self::isInstantiated() && self::$settled);
+    }
+
+    public static function doSinglePayment($params = array())
+    {
+        //@TODO: prepare params for PaymentRequest
+        $params = array_filter($params);
+        $params = array_intersect_key(
+            $params,
+            array_flip(
+                array('order_id', 'amount','payer_id','timestamp')
+            )
+        );
+
+        //@TODO: execute request
+        $returnDummy = array_reverse($params);
+        
+        //@TODO: return (postprocessed??) response
+        return $returnDummy;
     }
 }
