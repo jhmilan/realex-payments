@@ -85,7 +85,7 @@ class Realex
         if (!self::isSettled()) {
             throw new \ErrorException('Realex engine not settled');
         }
-        return self::$secret;
+        return self::$adapter;
     }
 
     public static function setProperty($property, $value)
