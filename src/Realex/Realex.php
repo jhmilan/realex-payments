@@ -140,7 +140,7 @@ class Realex
         if (!array_key_exists('adapter', $params)) {
             $params['adapter'] = "curl";
         } else {
-            if (!in_array($params['adapter'], array('md5', 'sha1'))) {
+            if (!in_array($params['adapter'], array('curl', 'buzz'))) {
                 throw new \ErrorException('Bad params when loading Realex: adapter must be curl or buzz');
             }
         }
